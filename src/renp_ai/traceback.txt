@@ -1,0 +1,30 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 32, in script call
+    call get_parsed_llm_response
+  File "game/functions/label_functions.rpy", line 54, in script
+    $ is_valid, response_data = validate_response(assistant_message)
+  File "game/functions/label_functions.rpy", line 54, in <module>
+    $ is_valid, response_data = validate_response(assistant_message)
+NameError: name 'validate_response' is not defined
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 32, in script call
+    call get_parsed_llm_response
+  File "game/functions/label_functions.rpy", line 54, in script
+    $ is_valid, response_data = validate_response(assistant_message)
+  File "C:\Users\Shardic\Desktop\YorkSolutions\renpy_ai\renpy\renpy-8.2.3-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\Shardic\Desktop\YorkSolutions\renpy_ai\renpy\renpy-8.2.3-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/functions/label_functions.rpy", line 54, in <module>
+    $ is_valid, response_data = validate_response(assistant_message)
+NameError: name 'validate_response' is not defined
+
+Windows-10-10.0.19045 AMD64
+Ren'Py 8.2.3.24061702
+renp_ai 1.0
+Wed Aug  7 01:40:16 2024

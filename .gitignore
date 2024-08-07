@@ -8,3 +8,9 @@ renpy
 key.txt
 .txt
 log*
+*.save
+*.saves
+*.rpyc
+*.rpyb
+*.rpymc
+*.rpym

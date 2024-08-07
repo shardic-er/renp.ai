@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/functions/api_functions.rpy", line 68: expected an indented block
+    try:
+     ^
+
+Ren'Py Version: Ren'Py 8.2.3.24061702
+Wed Aug  7 01:40:17 2024
