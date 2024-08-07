@@ -1,0 +1,9 @@
+renpy
+*-dists
+.rpyc
+.idea
+.venv
+.save
+key.txt
+.txt
+log*
