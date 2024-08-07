@@ -4,6 +4,7 @@ renpy
 .idea
 .venv
 .save
+.saves
 key.txt
 .txt
 log*
