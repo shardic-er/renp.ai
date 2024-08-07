@@ -15,3 +15,4 @@ log*
 *.rpymc
 *.rpym
 /src/renp_ai/game/saves
+**/saves
