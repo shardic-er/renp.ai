@@ -16,3 +16,5 @@ log*
 *.rpym
 /src/renp_ai/game/saves
 **/saves
+**/cache
+/cache

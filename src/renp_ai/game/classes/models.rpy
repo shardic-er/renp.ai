@@ -11,7 +11,7 @@ init python:
 
     # Default configurations
     DEFAULT_MODEL = ModelSelection.GPT_4o
-    DEFAULT_MAX_TOKENS = 512
+    DEFAULT_MAX_TOKENS = 1000
     DEFAULT_MAX_LINE_LENGTH = 250
     DEFAULT_USER_NAME = "user"
 

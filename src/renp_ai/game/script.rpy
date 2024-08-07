@@ -41,6 +41,3 @@ label start:
             "Exit":
                 "You chose to exit."
                 jump end
-
-
-
