@@ -1,0 +1,31 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 66, in script
+    python:
+  File "game/script.rpy", line 68, in <module>
+    next_label = game_loop_manager.start_initial_loop()
+AttributeError: 'DisplayManager' object has no attribute 'change_scene'
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 66, in script
+    python:
+  File "C:\Users\Shardic\Downloads\renpy-8.2.3-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\Shardic\Downloads\renpy-8.2.3-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 68, in <module>
+    next_label = game_loop_manager.start_initial_loop()
+  File "<string>", line 18, in start_initial_loop
+  File "<string>", line 65, in handle_choice_and_get_response
+  File "<string>", line 103, in process_assistant_response
+  File "<string>", line 116, in display_assistant_response
+  File "<string>", line 126, in handle_flags
+AttributeError: 'DisplayManager' object has no attribute 'change_scene'
+
+Windows-10-10.0.19045 AMD64
+Ren'Py 8.2.3.24061702
+Disco Framework 1.2
+Mon Aug 19 11:00:41 2024
