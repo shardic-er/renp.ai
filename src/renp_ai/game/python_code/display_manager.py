@@ -178,8 +178,8 @@ class DisplayManager:
             scale = min(width_scale, height_scale)
 
             # Calculate the new image size
-            new_width = int(image_width * scale)
-            new_height = int(image_height * scale)
+            new_width = int(image_width * scale * 1)
+            new_height = int(image_height * scale * 1.15)
 
             # Apply the scaling to the image
             displayable = im.Scale(displayable, new_width, new_height)

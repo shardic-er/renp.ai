@@ -238,10 +238,11 @@ style choice_vbox:
 #
 style choice_button is default:
     properties gui.button_properties("choice_button")
-    xmaximum int(config.screen_width * 0.35)
+    xmaximum int(config.screen_width * 0.4)
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
+    xmaximum int(config.screen_width * 0.4)
 
 
 
