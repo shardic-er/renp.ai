@@ -23,7 +23,7 @@ class ImageGenerator:
 
             # Create a filename for the image based on the prompt
             image_filename = f"{prompt.replace(' ', '_')}.png"
-            image_filepath = os.path.join(self.cache_dir, image_filename).replace("\\", "/")
+            image_filepath = os.path.join(cache_dir, image_filename).replace("\\", "/")
 
             # Save the image file to the designated path
             with open(image_filepath, 'wb') as file:

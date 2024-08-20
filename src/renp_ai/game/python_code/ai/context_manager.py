@@ -62,6 +62,10 @@ class ContextManager:
 
         # Handles a location change by updating the scene object.
         self.scene.set_location(new_location)
+
+        # Set the description of the new location
+        new_location.description = self.describe_image(new_location)
+
         return new_location
 
     def get_filtered_context_by_role(self, role):
@@ -78,3 +82,9 @@ class ContextManager:
         if generation_type == "location":
             new_location = self.delegate.generate_location(converted_choice)
             return new_location
+
+    def describe_image(self, location):
+        filepath = os.path.join(cache_dir, location.filepath).replace("\\", "/")
+        image_description = self.delegate.api_manager.visualize_image_description(filepath)
+        log_message("Image description: " + image_description)
+        return image_description

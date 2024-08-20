@@ -1,8 +1,9 @@
 # This file contains the Location class, which represents a location in the game.
 # game/python_code/constructs/location.py
 class Location:
-    def __init__(self, name, description, filepath=None):
+    def __init__(self, name, prompt, description=None, filepath=None):
         self.name = name
+        self.prompt = prompt
         self.description = description
         if filepath:
             self.filepath = filepath
@@ -14,3 +15,6 @@ class Location:
             'Name': self.name,
             "Description": self.description,
         }
+
+    def set_description(self, description):
+        self.description = description

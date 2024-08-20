@@ -107,3 +107,81 @@ class LLMClient:
             error_detail = e.response.text
             log_message(f"API request failed: {str(e)} - {error_detail}")
             return None
+
+    def log_safe_payload(self, payload):
+        # Make a deep copy of the payload to avoid modifying the original one
+        safe_payload = json.loads(json.dumps(payload))
+
+        # Traverse the messages to find any base64 encoded image data
+        for message in safe_payload.get("messages", []):
+            for content_item in message["content"]:
+                if content_item.get("type") == "image_url" and "url" in content_item["image_url"]:
+                    # Replace the base64 image data with a placeholder string
+                    content_item["image_url"]["url"] = "[base 64 encoded image omitted]"
+
+        # Log the modified payload
+        log_message("Payload: " + json.dumps(safe_payload, indent=2))
+
+    def visualize_image_description(self, image_filepath):
+        if not self.api_key_manager.api_key:
+            log_message("API key is missing.")
+            return None
+
+        api_url = "https://api.openai.com/v1/chat/completions"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.api_key_manager.api_key}"
+        }
+
+        # Encode the image as a base64 string
+        try:
+            with open(image_filepath, "rb") as image_file:
+                base64_image = base64.b64encode(image_file.read()).decode('utf-8')
+        except FileNotFoundError:
+            log_message(f"Image file not found at path: {image_filepath}")
+            return None
+        except Exception as e:
+            log_message(f"Failed to load image: {str(e)}")
+            return None
+
+        # Construct the message payload with the image encoded in base64
+        payload = {
+            "model": self.selected_model,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "Describe this scene."
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,{base64_image}"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "max_tokens": DEFAULT_IMAGE_DESCRIPTION_MAX_LENGTH
+        }
+
+        # Log the payload safely
+        self.log_safe_payload(payload)
+
+        try:
+            # Send the POST request to the API
+            response = requests.post(api_url, headers=headers, json=payload)
+            response.raise_for_status()  # Raise an HTTPError for bad responses
+            result = response.json()
+
+            assistant_message = result['choices'][0]['message']['content'].strip()
+
+            return assistant_message
+        except requests.exceptions.RequestException as e:
+            error_detail = e.response.text
+            log_message(f"API request failed: {str(e)} - {error_detail}")
+            return None
+
+

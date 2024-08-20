@@ -10,10 +10,13 @@ init python:
     import json
     import requests
     import re
+    import base64
 
     # Set the base directory to the actual location of the script file
     python_modules_dir = os.path.join(config.gamedir, "python_code")
     audio_dir = os.path.join(config.gamedir, "audio")
+    log_dir = os.path.join(config.gamedir, "log_custom.txt")
+    cache_dir = os.path.join(config.gamedir, "cache").replace("\\", "/")
 
     # Add the correct directory to sys.path
     sys.path.append(python_modules_dir)
@@ -29,7 +32,7 @@ init python:
     sound_dict = {}
 
     def log_message (message):
-        with open(os.path.join(config.gamedir, "log_custom.txt"),"a") as f:
+        with open(os.path.join(log_dir),"a") as f:
             f.write(message + "\n")
 
     def initialize_sounds(directory, sound_dict):

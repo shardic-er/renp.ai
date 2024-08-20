@@ -44,20 +44,26 @@ class Delegate:
         return None
 
     def generate_location(self, choice):
+        max_retries = 3
+        attempts = 0
 
-        location_data_raw = self.api_manager.imagine_location_name_and_description(choice)
+        while attempts < max_retries:
+            location_data_raw = self.api_manager.imagine_location_name_and_description(choice)
+            validation_result, location_data = self.validate_location_response(location_data_raw)
 
-        validation_result, location_data = self.validate_location_response(location_data_raw)
+            if validation_result:
+                log_message(f"Location data: {location_data}")
 
-        if validation_result:
-            log_message(f"Location data: {location_data}")
+                new_location = Location(
+                    name=location_data.get('name'),
+                    prompt=location_data.get('prompt'),
+                )
 
-            new_location = Location(
-                name=location_data.get('name'),
-                description=location_data.get('description')
-            )
+                return new_location
+            else:
+                log_message(f"Attempt {attempts + 1} failed: Invalid location data received.")
+                attempts += 1
 
-            return new_location
-        else:
-            raise ValueError("Invalid location data received from delegate.")
-            return None
+        # If the loop completes without returning, raise an error
+        raise ValueError("Failed to generate valid location data after multiple attempts.")
+

@@ -10,7 +10,8 @@ default_characters = [Character(
 # Create a default location
 default_location = Location(
     name="Mysterious Forest",
-    description="A dense, fog-covered forest where the trees whisper secrets.",
+    description="none",
+    prompt="A dense, fog-covered forest where the trees whisper secrets.",
     filepath="/cache/a_mystical_forest_at_dawn.png"  # Adjust to the correct path
 )
 

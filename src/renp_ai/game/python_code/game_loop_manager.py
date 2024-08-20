@@ -39,8 +39,11 @@ class GameLoopManager:
             if 'location' in flags:
                 # Inform ContextManager about the location change
                 new_location = self.context_manager.handle_location_change(choice)
+
                 # After the context manager updates the location, inform the display manager
                 self.display_manager.change_scene(new_location)
+
+                self.context_manager.describe_image(new_location)
 
             #  options is a list of dictionaries with the following structure:
             #  [{"choice": "text1", "flags": ["location"]}]

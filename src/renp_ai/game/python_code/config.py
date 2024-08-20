@@ -15,6 +15,7 @@ class RecognizedFlags:
 DEFAULT_MAX_CHAT_HISTORY_LENGTH = 2
 DEFAULT_MODEL = ModelSelection.GPT_4o
 DEFAULT_MAX_TOKENS = 4000
+DEFAULT_IMAGE_DESCRIPTION_MAX_LENGTH = 250
 DEFAULT_MAX_LINE_LENGTH = 250
 DEFAULT_USER_NAME = "user"
 DEFAULT_PROMPT = "write me a long story about walking through a dark wood"

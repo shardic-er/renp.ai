@@ -3,8 +3,7 @@ class DisplayManager:
         self.narrator = narrator
         self.sound_dict = sound_dict
         self.api_manager = api_manager
-        self.cache_dir = os.path.join(config.gamedir, "cache").replace("\\", "/")
-        self.image_generator = ImageGenerator(self.cache_dir)
+        self.image_generator = ImageGenerator(cache_dir)
 
     def display_message(self, message):
         renpy.sound.play(self.sound_dict.get('button_click.mp3'))
@@ -149,7 +148,7 @@ class DisplayManager:
     def change_scene(self, location):
         try:
             image_filename = f"{location.name.replace(' ', '_')}.png"
-            image_filepath = os.path.join(self.cache_dir, image_filename).replace("\\", "/")
+            image_filepath = os.path.join(cache_dir, image_filename).replace("\\", "/")
 
             # Check if the image exists, if not, generate it
             if not os.path.exists(image_filepath):

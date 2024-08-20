@@ -11,6 +11,9 @@ class APIManager:
     def imagine_location_name_and_description(self, choice):
         return self.llm_client.imagine_location_name_and_description(choice)
 
+    def visualize_image_description(self, image_url):
+        return self.llm_client.visualize_image_description(image_url)
+
     def validate_response_retry_until_valid(self, assistant_message, user_message):
         return self.response_validator.validate_response_retry_until_valid(self.llm_client, assistant_message, user_message)
 
