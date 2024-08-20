@@ -1,4 +1,10 @@
 renpy
+errors.txt
+image_generation_log.txt
+navigation.json
+persistant
+shaders.txt
+traceback.txt
 *-dists
 .rpyc
 .idea

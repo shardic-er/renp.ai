@@ -1,4 +1,0 @@
-Image successfully retrieved and saved at C:/Users/Shardic/Desktop/YorkSolutions/renpy_ai/src/renp_ai/game/cache/clearing_with_glowing_lantern.png
-Image successfully retrieved and saved at C:/Users/Shardic/Desktop/YorkSolutions/renpy_ai/src/renp_ai/game/cache/left_path_forest.png
-Image successfully retrieved and saved at C:/Users/Shardic/Desktop/YorkSolutions/renpy_ai/src/renp_ai/game/cache/deep_forest_path.png
-Image successfully retrieved and saved at C:/Users/Shardic/Desktop/YorkSolutions/renpy_ai/src/renp_ai/game/cache/denser_woods.png
