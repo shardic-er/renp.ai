@@ -5,16 +5,14 @@ class ContextManager:
         self.chat_history = []  # List to hold the history of chat messages
         self.scene = None  # Optional scene object
         self.max_history_length = max_history_length  # Maximum length of chat history
-        self.logger = Logger(os.path.join(base_dir, "log_custom.txt"))
         self.delegate = Delegate(
             self,
             APIManager(
-                self, log_file_path=os.path.join(base_dir, "log_custom.txt"),
+                self,
                 model=DEFAULT_MODEL,
                 max_tokens=DEFAULT_MAX_TOKENS,
                 api_key_manager=api_key_manager,
-            ),
-            self.logger
+            )
         )
 
     def truncate_history(self):

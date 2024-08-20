@@ -2,7 +2,6 @@ class GameLoopManager:
     def __init__(self, display_manager, context_manager):
         self.display_manager = display_manager
         self.context_manager = context_manager
-        self.logger = Logger(os.path.join(base_dir, "log_custom.txt"))
 
     def start_initial_loop(self):
         if not self.display_manager.api_manager.api_key_manager.api_key:

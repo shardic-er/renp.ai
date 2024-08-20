@@ -8,7 +8,6 @@ from src.renp_ai.game.python_code.constructs.character import Character
 from src.renp_ai.game.python_code.ai.context_manager import ContextManager
 from src.renp_ai.game.python_code.api_manager.llm_client import LLMClient
 from src.renp_ai.game.python_code.api_manager.api_key_manager import APIKeyManager
-from src.renp_ai.game.python_code.api_manager.logger import Logger
 from src.renp_ai.game.python_code.config import DEFAULT_MODEL, DEFAULT_MAX_TOKENS, SYSTEM_PROMPT
 
 # Test script for the new Scene and Character functionality
@@ -32,13 +31,12 @@ if __name__ == "__main__":
     # Set the scene in the ContextManager
     context_manager.set_scene(scene)
 
-    # Initialize the API key manager and logger
+    # Initialize the API key manager
     api_key_manager = APIKeyManager()
-    logger = Logger("log_test.txt")
     api_key_manager.save_api_key("sk-your-api-key-here")  # Replace with a valid API key
 
     # Initialize the LLM client
-    llm_client = LLMClient(context_manager=context_manager, model=DEFAULT_MODEL, max_tokens=DEFAULT_MAX_TOKENS, api_key_manager=api_key_manager, logger=logger)
+    llm_client = LLMClient(context_manager=context_manager, model=DEFAULT_MODEL, max_tokens=DEFAULT_MAX_TOKENS, api_key_manager=api_key_manager)
 
     # Get the context with the scene and request a completion
     context = context_manager.get_context()

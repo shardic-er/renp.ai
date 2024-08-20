@@ -12,22 +12,25 @@ init python:
     import re
 
     # Set the base directory to the actual location of the script file
-    base_dir = "C:/Users/Shardic/Desktop/YorkSolutions/renpy_ai/src/renp_ai/game"
-    python_modules_dir = os.path.join(base_dir, "python_code")
-    audio_dir = os.path.join(base_dir, "audio")
+    python_modules_dir = os.path.join(config.gamedir, "python_code")
+    audio_dir = os.path.join(config.gamedir, "audio")
 
     # Add the correct directory to sys.path
     sys.path.append(python_modules_dir)
 
-    # Define the log file path early
-    log_file_path = os.path.join(base_dir, "log_custom.txt")
-
     # Execute all .py files within the python_code directory
     for filepath in glob.glob(os.path.join(python_modules_dir, '**', '*.py'), recursive=True):
-        exec(open(filepath).read())
+        try:
+            exec(open(filepath).read())
+        except Exception as e:
+            raise RuntimeError(f"Failed to execute script {filepath}: {str(e)}") from e
 
     # Initialize the sound dictionary
     sound_dict = {}
+
+    def log_message (message):
+        with open(os.path.join(config.gamedir, "log_custom.txt"),"a") as f:
+            f.write(message + "\n")
 
     def initialize_sounds(directory, sound_dict):
     # Recursively initialize sounds from the given directory."
@@ -54,13 +57,12 @@ init python:
     # Initialize components
     api_manager = APIManager(
         context_manager=context_manager,
-        log_file_path=log_file_path,
         model=DEFAULT_MODEL,
         max_tokens=DEFAULT_MAX_TOKENS,
         api_key_manager=api_key_manager
 
     )
-    display_manager = DisplayManager(narrator, sound_dict, api_manager, base_dir)
+    display_manager = DisplayManager(narrator, sound_dict, api_manager)
     game_loop_manager = GameLoopManager(display_manager, context_manager)
 
 label start:

@@ -19,7 +19,6 @@ The project is structured to maintain separation of concerns and modularity, mak
     - `APIManager.py`: Manages interactions with the OpenAI API, including key management, logging, and API response validation.
     - `APIKeyManager.py`: Handles storing and validating the API key.
     - `LLMClient.py`: Manages calls to the OpenAI API, sends prompts, and receives responses.
-    - `Logger.py`: Handles logging of API requests and responses.
     - `ResponseValidator.py`: Validates API responses and parses them into a structured format.
   - **`/ai/`**
     - `context.py`: Contains the `ChatHistory` class, which manages the conversation history between the user and the AI.
@@ -30,7 +29,7 @@ The project is structured to maintain separation of concerns and modularity, mak
 - **`APIManager`**: 
   - Manages the interaction with the OpenAI API.
   - Validates API keys, sends prompts, and logs responses.
-  - Composed of `APIKeyManager`, `LLMClient`, `Logger`, and `ResponseValidator`.
+  - Composed of `APIKeyManager`, `LLMClient`, and `ResponseValidator`.
 
 - **`APIKeyManager`**: 
   - Handles saving and validating the API key used to access the OpenAI API.
@@ -38,9 +37,6 @@ The project is structured to maintain separation of concerns and modularity, mak
 - **`LLMClient`**: 
   - Manages the construction and sending of API requests.
   - Handles the AI's response generation based on user inputs.
-
-- **`Logger`**: 
-  - Responsible for logging API requests and responses for debugging and audit purposes.
 
 - **`ResponseValidator`**: 
   - Ensures that the API's responses are valid and can be parsed into a usable format.

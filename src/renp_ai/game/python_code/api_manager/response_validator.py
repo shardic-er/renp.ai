@@ -1,6 +1,6 @@
 class ResponseValidator:
-    def __init__(self, logger):
-        self.logger = logger
+    def __init__(self):
+        pass
 
     def validate_response(self, response):
         try:
@@ -8,22 +8,22 @@ class ResponseValidator:
             choices = data.get('choices', None)
 
             if not hasattr(choices, '__iter__') or not hasattr(choices, 'append'):
-                self.logger.log_message("Error - Choices is not list-like.")
+                log_message("Error - Choices is not list-like.")
                 return False, {}
 
             if not (2 <= len(choices) <= 4):
-                self.logger.log_message(f"Error - Choices should contain between 2 and 4 items, found {len(choices)}")
+                log_message(f"Error - Choices should contain between 2 and 4 items, found {len(choices)}")
                 return False, {}
 
             for choice in choices:
                 if not isinstance(choice, str):
-                    self.logger.log_message("Error - Each choice should be a string.")
+                    log_message("Error - Each choice should be a string.")
                     return False, {}
 
             return True, data
 
         except json.JSONDecodeError as e:
-            self.logger.log_message(f"Error - Invalid JSON format: {str(e)}")
+            log_message(f"Error - Invalid JSON format: {str(e)}")
             return False, {}
 
     def validate_response_retry_until_valid(self, llm_client, assistant_message, user_message, max_retries=3):
@@ -33,15 +33,14 @@ class ResponseValidator:
             if is_valid:
                 return validation_result  # Return validated response
             else:
-                self.logger.log_message(f"Invalid response: {assistant_message}")
+                log_message(f"Invalid response: {assistant_message}")
                 retries += 1
                 if retries < max_retries:
-                    self.logger.log_message(f"Retrying... ({retries}/{max_retries})")
+                    log_message(f"Retrying... ({retries}/{max_retries})")
                     assistant_message = llm_client.get_llm_response(user_message)
                 else:
-                    self.logger.log_message("Max retries reached. No valid response received.")
+                    log_message("Max retries reached. No valid response received.")
                     return None
-        return None
 
     def sanitize_choice_text_and_extract_flags(self, choice_text):
         # Regular expression to match anything within curly braces {}
@@ -58,7 +57,7 @@ class ResponseValidator:
     def parse_response(self, response, max_line_length):
         is_valid, parsed_data = self.validate_response(response)
         if not is_valid:
-            self.logger.log_message("Validation failed.")
+            log_message("Validation failed.")
             return ["Invalid response received."], []
 
         narration = parsed_data["narration"]

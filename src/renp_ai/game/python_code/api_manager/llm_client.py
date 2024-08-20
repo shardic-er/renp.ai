@@ -1,14 +1,13 @@
 class LLMClient:
-    def __init__(self, context_manager, model, max_tokens, api_key_manager, logger):
+    def __init__(self, context_manager, model, max_tokens, api_key_manager):
         self.context_manager = context_manager
         self.selected_model = model
         self.max_tokens = max_tokens
         self.api_key_manager = api_key_manager
-        self.logger = logger
 
     def get_llm_response(self, user_message):
         if not self.api_key_manager.api_key:
-            self.logger.log_message("API key is missing.")
+            log_message("API key is missing.")
             return None
 
         api_url = "https://api.openai.com/v1/chat/completions"
@@ -28,7 +27,7 @@ class LLMClient:
             "messages": messages
         }
 
-        self.logger.log_message("Payload: " + json.dumps(payload, indent=2))
+        log_message("Payload: " + json.dumps(payload, indent=2))
 
         try:
             response = requests.post(api_url, headers=headers, data=json.dumps(payload))
@@ -40,12 +39,12 @@ class LLMClient:
             return assistant_message
         except requests.exceptions.RequestException as e:
             error_detail = e.response.text
-            self.logger.log_message(f"API request failed: {str(e)} - {error_detail}")
+            log_message(f"API request failed: {str(e)} - {error_detail}")
             return None
 
     def imagine_location_name_and_description(self, choice):
         if not self.api_key_manager.api_key:
-            self.logger.log_message("API key is missing.")
+            log_message("API key is missing.")
             return None
 
         api_url = "https://api.openai.com/v1/chat/completions"
@@ -94,7 +93,7 @@ class LLMClient:
             "messages": messages
         }
 
-        self.logger.log_message("Payload: " + json.dumps(payload, indent=2))
+        log_message("Payload: " + json.dumps(payload, indent=2))
 
         try:
             response = requests.post(api_url, headers=headers, data=json.dumps(payload))
@@ -106,5 +105,5 @@ class LLMClient:
             return assistant_message
         except requests.exceptions.RequestException as e:
             error_detail = e.response.text
-            self.logger.log_message(f"API request failed: {str(e)} - {error_detail}")
+            log_message(f"API request failed: {str(e)} - {error_detail}")
             return None

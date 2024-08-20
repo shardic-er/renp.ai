@@ -1,9 +1,8 @@
 class APIManager:
-    def __init__(self, context_manager, log_file_path, model, max_tokens, api_key_manager):
+    def __init__(self, context_manager, model, max_tokens, api_key_manager):
         self.api_key_manager = api_key_manager
-        self.logger = Logger(log_file_path)
-        self.llm_client = LLMClient(context_manager, model, max_tokens, self.api_key_manager, self.logger)
-        self.response_validator = ResponseValidator(self.logger)
+        self.llm_client = LLMClient(context_manager, model, max_tokens, self.api_key_manager)
+        self.response_validator = ResponseValidator()
         self.context_manager = context_manager
 
     def get_llm_response(self, user_message):

@@ -1,8 +1,7 @@
 class Delegate:
-    def __init__(self, context_manager, api_manager, logger):
+    def __init__(self, context_manager, api_manager):
         self.context_manager = context_manager
         self.api_manager = api_manager
-        self.logger = logger
 
     def validate_location_response(self, response):
         # Location response should look like this:
@@ -14,15 +13,15 @@ class Delegate:
         try:
             response = json.loads(response)
             if 'name' not in response:
-                self.logger.log_message("Missing 'name' key in response.")
+                log_message("Missing 'name' key in response.")
                 return False, {}
             if 'description' not in response:
-                self.logger.log_message("Missing 'description' key in response.")
+                log_message("Missing 'description' key in response.")
                 return False, {}
             return True, response
 
         except json.JSONDecodeError as e:
-            self.logger.log_message(f"Error - Invalid JSON format: {str(e)}")
+            log_message(f"Error - Invalid JSON format: {str(e)}")
             return False, {}
 
     def retry_until_valid(self, callback, validator, max_retries=3):
@@ -34,12 +33,12 @@ class Delegate:
             if is_valid:
                 return validation_result
             else:
-                self.logger.log_message(f"Invalid response: {response}")
+                log_message(f"Invalid response: {response}")
                 retries += 1
                 if retries < max_retries:
-                    self.logger.log_message(f"Retrying... ({retries}/{max_retries})")
+                    log_message(f"Retrying... ({retries}/{max_retries})")
                 else:
-                    self.logger.log_message("Max retries reached. No valid response received.")
+                    log_message("Max retries reached. No valid response received.")
                     return None
 
         return None
@@ -51,7 +50,7 @@ class Delegate:
         validation_result, location_data = self.validate_location_response(location_data_raw)
 
         if validation_result:
-            self.logger.log_message(f"Location data: {location_data}")
+            log_message(f"Location data: {location_data}")
 
             new_location = Location(
                 name=location_data.get('name'),

@@ -5,11 +5,11 @@ class ImageGenerator:
         self.cache_dir = cache_dir
         if not os.path.exists(self.cache_dir):
             os.makedirs(self.cache_dir)
-        self.logger = Logger(os.path.join(base_dir, "image_generation_log.txt"))
+        log_message(os.path.join(config.gamedir, "image_generation_log.txt"))
 
     def create_displayable(self, image_filepath):
         if not os.path.exists(image_filepath):
-            self.logger.log_message(f"Image file does not exist at path: {image_filepath}")
+            log_message(f"Image file does not exist at path: {image_filepath}")
             raise FileNotFoundError(f"The image file at {image_filepath} does not exist.")
         return im.Image(image_filepath)
 
@@ -30,10 +30,10 @@ class ImageGenerator:
                 file.write(response.content)
 
             # Log successful image retrieval and saving
-            self.logger.log_message(f"Image successfully retrieved and saved at {image_filepath}")
+            log_message(f"Image successfully retrieved and saved at {image_filepath}")
 
             return image_filepath  # Return the filepath for further use
 
         except requests.exceptions.RequestException as e:
-            self.logger.log_message(f"Error generating image: {str(e)}")
+            log_message(f"Error generating image: {str(e)}")
             return None

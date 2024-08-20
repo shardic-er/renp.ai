@@ -1,12 +1,10 @@
 class DisplayManager:
-    def __init__(self, narrator, sound_dict, api_manager, base_dir):
+    def __init__(self, narrator, sound_dict, api_manager):
         self.narrator = narrator
         self.sound_dict = sound_dict
         self.api_manager = api_manager
-        self.base_dir = base_dir
-        self.cache_dir = os.path.join(base_dir, "cache").replace("\\", "/")
+        self.cache_dir = os.path.join(config.gamedir, "cache").replace("\\", "/")
         self.image_generator = ImageGenerator(self.cache_dir)
-        self.logger = Logger(os.path.join(base_dir, "log_custom.txt"))
 
     def display_message(self, message):
         renpy.sound.play(self.sound_dict.get('button_click.mp3'))
@@ -16,7 +14,7 @@ class DisplayManager:
         menu_items = [(opt['choice'], opt) for opt in options]
         choice_text_as_unparsed_string = renpy.display_menu(menu_items)
         renpy.sound.play(self.sound_dict.get('selection.mp3'))
-        self.logger.log_message(f"User choice: {json.dumps(choice_text_as_unparsed_string)}")
+        log_message(f"User choice: {json.dumps(choice_text_as_unparsed_string)}")
         return choice_text_as_unparsed_string
 
     def format_and_display_response(self, response_lines):
@@ -25,20 +23,20 @@ class DisplayManager:
 
     def validate_choice_data(self, choice):
         if not choice:
-            self.api_manager.logger.log_message("Choice data is missing.")
+            log_message("Choice data is missing.")
             raise ValueError("Choice data is missing.")
 
         # Check if 'choice' behaves like a dictionary
         if not all(hasattr(choice, method) for method in ['get', 'items', '__contains__']):
-            self.api_manager.logger.log_message("Choice data is not dictionary-like.")
+            log_message("Choice data is not dictionary-like.")
             raise ValueError(f"Choice data is not dictionary-like, it is a: {type(choice)}")
 
         if 'choice' not in choice:
-            self.api_manager.logger.log_message("Missing 'choice' key in choice data.")
+            log_message("Missing 'choice' key in choice data.")
             raise ValueError("Missing 'choice' key in choice data.")
 
         if 'flags' not in choice:
-            self.api_manager.logger.log_message("Missing 'flags' key in choice data.")
+            log_message("Missing 'flags' key in choice data.")
             raise ValueError("Missing 'flags' key in choice data.")
 
         # If all checks pass, return True to indicate valid data
@@ -49,7 +47,7 @@ class DisplayManager:
         # choice` is a dictionary with the following structure:
         #  {"choice": "text1", "flags": ["location"]}
 
-        self.logger.log_message(f"Handling choice: {choice}")
+        log_message(f"Handling choice: {choice}")
 
         # Verify that it is infact a dictionary
         self.validate_choice_data(choice)
@@ -64,7 +62,7 @@ class DisplayManager:
             # Process the assistant response
             return self.process_assistant_response(assistant_message, user_message)
 
-        self.api_manager.logger.log_message("Failsafe triggered, returning None.")
+        log_message("Failsafe triggered, returning None.")
         return None
 
     def parse_choice(self, choice):
@@ -155,7 +153,7 @@ class DisplayManager:
 
             # Check if the image exists, if not, generate it
             if not os.path.exists(image_filepath):
-                self.api_manager.logger.log_message(f"No image found at {image_filepath}, generating new image.")
+                log_message(f"No image found at {image_filepath}, generating new image.")
                 image_filepath = self.image_generator.generate_image(location.name)
                 if not image_filepath:
                     raise Exception("Failed to generate image.")
@@ -192,7 +190,7 @@ class DisplayManager:
             renpy.show('bg', what=displayable)
 
         except Exception as e:
-            self.api_manager.logger.log_message(f"Failed to load image for location '{location.name}': {str(e)}")
+            log_message(f"Failed to load image for location '{location.name}': {str(e)}")
             self.display_message(f"Failed to load the scene image: {str(e)}")
 
 
